@@ -542,12 +542,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               {/* Administrator Contact Details */}
               <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-xs space-y-1">
                 <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between">
-                  <span>Contact School Administration / ICT Office:</span>
-                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Support Desk Online</span>
+                  <span>Contact School Administration to Get Onboarded:</span>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Support Online</span>
                 </div>
-                <div className="text-slate-500 dark:text-slate-400 flex flex-col gap-0.5 text-[11px]">
-                  <div>📧 ICT Directorate: <a href="mailto:ict.support@attwoolschools.com" className="text-[#0B4F9C] dark:text-[#5b9bf0] font-semibold underline">ict.support@attwoolschools.com</a></div>
-                  <div>🏢 Administration Office: <span className="font-mono text-slate-700 dark:text-slate-300">admin@attwoolcollege.com • Ext. 402 / 405</span></div>
+                <div className="text-slate-600 dark:text-slate-300 text-[11px] pt-0.5">
+                  📧 Email: <a href="mailto:Attwoolcollege1@gmail.com" className="text-[#0B4F9C] dark:text-[#5b9bf0] font-semibold underline hover:opacity-80">Attwoolcollege1@gmail.com</a>
                 </div>
               </div>
 
@@ -1038,12 +1037,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   {/* Administrator Contact Details */}
                   <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-xs space-y-1">
                     <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between">
-                      <span>Contact School Administration / ICT Office:</span>
-                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Support Desk Online</span>
+                      <span>Contact School Administration to Get Onboarded:</span>
+                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Support Online</span>
                     </div>
-                    <div className="text-slate-500 dark:text-slate-400 flex flex-col gap-0.5 text-[11px]">
-                      <div>📧 ICT Directorate: <a href="mailto:ict.support@attwoolschools.com" className="text-[#0B4F9C] dark:text-[#5b9bf0] font-semibold underline">ict.support@attwoolschools.com</a></div>
-                      <div>🏢 Administration Office: <span className="font-mono text-slate-700 dark:text-slate-300">admin@attwoolcollege.com • Ext. 402 / 405</span></div>
+                    <div className="text-slate-600 dark:text-slate-300 text-[11px] pt-0.5">
+                      📧 Email: <a href="mailto:Attwoolcollege1@gmail.com" className="text-[#0B4F9C] dark:text-[#5b9bf0] font-semibold underline hover:opacity-80">Attwoolcollege1@gmail.com</a>
                     </div>
                   </div>
 
