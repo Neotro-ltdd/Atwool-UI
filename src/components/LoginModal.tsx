@@ -3,7 +3,6 @@ import { AttwoolLogo } from './AttwoolLogo';
 import {
   X,
   Lock,
-  Mail,
   ShieldAlert,
   CheckCircle2,
   ArrowRight,
@@ -16,7 +15,8 @@ import {
   Key,
   Check,
   ArrowLeft,
-  RotateCcw
+  RotateCcw,
+  User
 } from 'lucide-react';
 
 interface LoginModalProps {
@@ -105,6 +105,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   
   // UI states
   const [isLoading, setIsLoading] = useState(false);
@@ -465,25 +466,47 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-white dark:bg-[#161c27] rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden text-slate-900 dark:text-slate-100 transition-colors">
-        {/* Top Heraldic Accent Bar */}
-        <div className="h-2 w-full bg-gradient-to-r from-[#94A3B8] via-[#C8102E] to-[#0B4F9C]" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+      {/* Ambient Collegiate Glow Orbs for atmospheric depth */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full bg-[#0B4F9C]/25 blur-[130px]" />
+        <div className="absolute bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2 w-[480px] h-[480px] rounded-full bg-[#C8102E]/20 blur-[140px]" />
+      </div>
+
+      <div className="relative w-full max-w-md my-14 bg-white/85 dark:bg-[#0c1424]/85 backdrop-blur-2xl rounded-[32px] border border-white/60 dark:border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.2)] text-slate-900 dark:text-slate-100 transition-all">
+        {/* Specular Diagonal Glass Sheen Overlay (Image 2 Signature Highlight) */}
+        <div className="absolute inset-0 rounded-[32px] pointer-events-none overflow-hidden" aria-hidden="true">
+          <div className="absolute -top-[120%] -right-[60%] w-[200%] h-[200%] bg-gradient-to-bl from-white/30 via-white/5 to-transparent rotate-12 opacity-80 dark:opacity-20 pointer-events-none" />
+        </div>
+
+        {/* Floating Overlapping Avatar Badge (Signature Image 2 Motif) */}
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
+          <div className="w-24 h-24 rounded-full bg-[#072448] dark:bg-[#051833] border-4 border-white dark:border-slate-800 shadow-[0_12px_28px_rgba(0,0,0,0.35)] flex items-center justify-center text-white ring-2 ring-[#0B4F9C]/30 relative">
+            {/* Subtle inner glass rim */}
+            <div className="absolute inset-1 rounded-full border border-white/20" />
+            {/* User Silhouette Icon matching Image 2 */}
+            <User className="w-11 h-11 text-white stroke-[1.6]" />
+            {/* Miniature Attwool Emblem pip */}
+            <div className="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-white p-0.5 shadow-md border border-slate-200 flex items-center justify-center overflow-hidden">
+              <img src="/attwool-logo.jpg" alt="Attwool Crest" className="w-full h-full object-contain" />
+            </div>
+          </div>
+        </div>
 
         {/* Modal Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-1.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full text-slate-400 hover:text-slate-800 dark:hover:text-white bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 backdrop-blur-sm transition-colors focus:outline-none cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="p-6 sm:p-8">
+        <div className="pt-16 pb-6 px-6 sm:px-8">
           {/* Header & Logo */}
-          <div className="text-center mb-6">
-            <AttwoolLogo size="md" showSubtitle={false} className="mb-2" />
-            <h2 className="text-2xl font-bold font-brand-serif">
+          <div className="text-center mb-5">
+            <AttwoolLogo size="sm" showSubtitle={false} className="mb-2 justify-center" />
+            <h2 className="text-2xl font-bold font-brand-serif tracking-tight text-slate-900 dark:text-white">
               Staff Portal Authentication
             </h2>
             <div className="flex items-center justify-center gap-1.5 mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -494,14 +517,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
           {/* Feedback Banners */}
           {errorMessage && (
-            <div className="mb-4 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2 animate-in fade-in">
+            <div className="mb-4 p-3 rounded-xl bg-rose-50/90 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2 animate-in fade-in shadow-2xs">
               <ShieldAlert className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           {successMessage && (
-            <div className="mb-4 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-xs flex items-start gap-2 animate-in fade-in">
+            <div className="mb-4 p-3 rounded-xl bg-emerald-50/90 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-xs flex items-start gap-2 animate-in fade-in shadow-2xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
               <span>{successMessage}</span>
             </div>
@@ -509,8 +532,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
           {/* SCREEN 1: First-Time Visit / Invitation-Only Notice */}
           {step === 'invitation-notice' && (
-            <div className="space-y-5 animate-in fade-in">
-              <div className="p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60">
+            <div className="space-y-4 animate-in fade-in">
+              <div className="p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60">
                 <div className="flex items-start gap-3">
                   <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                   <div>
@@ -525,32 +548,32 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               </div>
 
               {/* 3-Step Onboarding Explainer */}
-              <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50/60 dark:bg-slate-900/40 space-y-2.5">
-                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3.5 bg-slate-50/60 dark:bg-slate-900/40 space-y-2">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">
                   <HelpCircle className="w-3.5 h-3.5 text-[#0B4F9C] dark:text-[#5b9bf0]" />
                   <span>How Staff Onboarding Operates:</span>
                 </div>
-                <div className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
+                <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                   <span className="w-5 h-5 rounded-full bg-[#0B4F9C] text-white flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
                   <span>Administrator provisions your profile with assigned classes and subjects.</span>
                 </div>
-                <div className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
+                <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                   <span className="w-5 h-5 rounded-full bg-[#0B4F9C] text-white flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
                   <span>You receive an official invitation email containing a 6-digit OTP code and direct activation link.</span>
                 </div>
-                <div className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
+                <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                   <span className="w-5 h-5 rounded-full bg-[#0B4F9C] text-white flex items-center justify-center text-[10px] font-bold shrink-0">3</span>
                   <span>Verify your OTP once and configure your permanent password to unlock portal access permanently.</span>
                 </div>
               </div>
 
               {/* Administrator Contact Details */}
-              <div className="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/80 text-xs space-y-1.5">
+              <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-xs space-y-1">
                 <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between">
                   <span>Contact School Administration / ICT Office:</span>
                   <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Support Desk Online</span>
                 </div>
-                <div className="text-slate-500 dark:text-slate-400 flex flex-col gap-1 text-[11px]">
+                <div className="text-slate-500 dark:text-slate-400 flex flex-col gap-0.5 text-[11px]">
                   <div>📧 ICT Directorate: <a href="mailto:ict.support@attwoolschools.com" className="text-[#0B4F9C] dark:text-[#5b9bf0] font-semibold underline">ict.support@attwoolschools.com</a></div>
                   <div>🏢 Administration Office: <span className="font-mono text-slate-700 dark:text-slate-300">admin@attwoolcollege.com • Ext. 402 / 405</span></div>
                 </div>
@@ -561,13 +584,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <button
                   type="button"
                   onClick={() => { setStep('verify-otp'); setErrorMessage(null); }}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold rounded-xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg transition-all active:scale-[0.98] cursor-pointer"
                 >
                   <Key className="w-4 h-4" />
-                  <span>Have an Invitation? Enter OTP &amp; Activate Account →</span>
+                  <span>Enter OTP &amp; Activate Account →</span>
                 </button>
 
-                <div className="text-center pt-2">
+                <div className="text-center pt-1">
                   <button
                     type="button"
                     onClick={() => { setStep('login'); setErrorMessage(null); }}
@@ -583,7 +606,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {/* SCREEN 2: Step 1 — Verify Invitation & OTP (One-Time Activation Only) */}
           {step === 'verify-otp' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2 mb-3">
+              <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800 pb-2 mb-2">
                 <span className="text-[11px] font-bold text-[#0B4F9C] dark:text-[#5b9bf0] uppercase tracking-wider flex items-center gap-1.5">
                   <KeyRound className="w-3.5 h-3.5" />
                   Step 1 of 2: Invitation &amp; Identity Verification
@@ -593,34 +616,40 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 </span>
               </div>
 
-              <div className="p-3 rounded-lg bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs text-blue-900 dark:text-blue-200 leading-relaxed">
+              <div className="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs text-blue-900 dark:text-blue-200 leading-relaxed">
                 The OTP is strictly an initial verification code. Once verified and your password is saved, your account is permanently activated and you will never be asked for an OTP again.
               </div>
 
               <form onSubmit={handleVerifyOtp} className="space-y-3.5">
+                {/* Staff Official Email Segmented Input */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                     Staff Official Email
                   </label>
-                  <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <User className="w-4 h-4" />
+                    </div>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="teacher.name@attwoolcollege.com"
                       required
-                      className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100"
+                      className="flex-1 px-3.5 py-3 text-sm bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-medium"
                     />
                   </div>
                 </div>
 
+                {/* 6-Digit OTP Segmented Input */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                     6-Digit One-Time Password (OTP)
                   </label>
-                  <div className="relative">
-                    <Key className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <Key className="w-4 h-4" />
+                    </div>
                     <input
                       type="text"
                       maxLength={6}
@@ -628,7 +657,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                       onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                       placeholder="849201"
                       required
-                      className="w-full pl-9 pr-3 py-2 text-base font-mono tracking-widest bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100 font-bold"
+                      className="flex-1 px-3.5 py-3 text-base font-mono tracking-widest bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-bold"
                     />
                   </div>
                   <span className="text-[10px] text-slate-400 mt-1 block">Check your inbox or spam for the official invitation email.</span>
@@ -637,7 +666,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-2">
@@ -654,7 +683,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               </form>
 
               {/* QA Test Simulation Quick-Fill */}
-              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-[#C8102E]" />
@@ -679,7 +708,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                         key={idx}
                         type="button"
                         onClick={() => handleSimulateInvitation(persona)}
-                        className="w-full text-left p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-[#0B4F9C] dark:hover:border-[#5b9bf0] hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all flex items-center justify-between cursor-pointer"
+                        className="w-full text-left p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-[#0B4F9C] dark:hover:border-[#5b9bf0] hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all flex items-center justify-between cursor-pointer"
                       >
                         <div>
                           <div className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 flex-wrap">
@@ -731,7 +760,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {/* SCREEN 3: Step 2 — Enforced Password Reset / Setup */}
           {step === 'set-password' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2 mb-2">
+              <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800 pb-2 mb-2">
                 <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Step 2 of 2: Create Permanent Password (Enforced)
@@ -739,54 +768,60 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <span className="text-[10px] text-slate-400">NDPA 2023</span>
               </div>
 
-              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs text-blue-900 dark:text-blue-200 leading-relaxed">
+              <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs text-blue-900 dark:text-blue-200 leading-relaxed">
                 OTP verified for <strong>{verifiedStaff?.name || email}</strong>! To complete onboarding, you must create your permanent confidential password. Your OTP will be consumed and retired.
               </div>
 
               <form onSubmit={handleSetPassword} className="space-y-3.5">
+                {/* New Permanent Password Segmented Input */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                     New Permanent Password
                   </label>
-                  <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <Lock className="w-4 h-4" />
+                    </div>
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="••••••••••••"
                       required
-                      className="w-full pl-9 pr-10 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100"
+                      className="flex-1 px-3.5 py-3 text-sm bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-medium"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 font-semibold cursor-pointer"
+                      className="px-3 text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-semibold cursor-pointer"
                     >
                       {showPassword ? 'Hide' : 'Show'}
                     </button>
                   </div>
                 </div>
 
+                {/* Confirm Permanent Password Segmented Input */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                     Confirm Permanent Password
                   </label>
-                  <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <Lock className="w-4 h-4" />
+                    </div>
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••••••"
                       required
-                      className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100"
+                      className="flex-1 px-3.5 py-3 text-sm bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-medium"
                     />
                   </div>
                 </div>
 
                 {/* Password Requirements Checklist */}
-                <div className="rounded-lg bg-slate-50 dark:bg-slate-900 p-2.5 border border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
+                <div className="rounded-xl bg-slate-100 dark:bg-slate-800/70 p-2.5 border border-slate-200 dark:border-slate-700 text-[11px] space-y-1">
                   <div className="flex items-center gap-1.5">
                     <Check className={`w-3.5 h-3.5 ${newPassword.length >= 8 ? 'text-emerald-500' : 'text-slate-300'}`} />
                     <span className={newPassword.length >= 8 ? 'text-emerald-700 dark:text-emerald-400 font-semibold' : 'text-slate-500'}>
@@ -804,7 +839,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-2">
@@ -835,7 +870,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 Welcome to Attwool Schools Academic Governance Portal. Your OTP has been verified and permanently consumed. Your permanent credentials are now live.
               </p>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-left max-w-xs mx-auto space-y-1">
+              <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-left max-w-xs mx-auto space-y-1">
                 <div><strong>Staff:</strong> {verifiedStaff?.name || 'Mr. Babatunde Fashola'}</div>
                 <div><strong>Email:</strong> {verifiedStaff?.email || email}</div>
                 <div><strong>Role:</strong> {verifiedStaff?.role || 'Teacher'}</div>
@@ -847,7 +882,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <button
                   type="button"
                   onClick={handleEnterWorkspaceFromActivation}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#0B4F9C] hover:bg-[#083a73] text-white text-sm font-bold rounded-xl shadow-md transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#0B4F9C] hover:bg-[#083a73] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg transition-all cursor-pointer"
                 >
                   <span>Enter Staff Workspace Now →</span>
                 </button>
@@ -867,13 +902,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {step === 'login' && (
             <div className="space-y-4 animate-in fade-in">
               {/* Auth Mode Toggle Tabs */}
-              <div className="flex rounded-lg bg-slate-100 dark:bg-slate-800 p-1 mb-4 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+              <div className="flex rounded-xl bg-slate-200/80 dark:bg-slate-800/80 p-1 mb-4 border border-slate-300/80 dark:border-slate-700/80 text-xs font-semibold backdrop-blur-sm">
                 <button
                   type="button"
                   onClick={() => { setAuthMode('sso'); setErrorMessage(null); }}
-                  className={`flex-1 py-2 rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`flex-1 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     authMode === 'sso'
-                      ? 'bg-white dark:bg-[#161c27] text-[#0B4F9C] dark:text-[#5b9bf0] shadow-xs font-bold'
+                      ? 'bg-white dark:bg-[#161c27] text-[#0B4F9C] dark:text-[#5b9bf0] shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                   }`}
                 >
@@ -888,9 +923,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <button
                   type="button"
                   onClick={() => { setAuthMode('local'); setErrorMessage(null); }}
-                  className={`flex-1 py-2 rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`flex-1 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     authMode === 'local'
-                      ? 'bg-white dark:bg-[#161c27] text-[#0B4F9C] dark:text-[#5b9bf0] shadow-xs font-bold'
+                      ? 'bg-white dark:bg-[#161c27] text-[#0B4F9C] dark:text-[#5b9bf0] shadow-sm font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                   }`}
                 >
@@ -910,7 +945,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     type="button"
                     onClick={handleGoogleSsoSimulate}
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm font-bold rounded-xl border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-md transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-white text-sm font-bold rounded-xl border border-slate-300 dark:border-slate-700 shadow-md hover:shadow-lg transition-all active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                   >
                     {isLoading ? (
                       <div className="flex items-center gap-2 text-slate-500">
@@ -930,69 +965,77 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     )}
                   </button>
 
-                  <div className="pt-2 text-[11px] text-slate-400">
+                  <div className="pt-1 text-[11px] text-slate-400">
                     🔒 Backend cryptographic verification via Google Identity Services &amp; JWKS.
                   </div>
                 </div>
               )}
 
-              {/* Option B: Local Credentials Form */}
+              {/* Option B: Local Credentials Form (Image 2 Layout & Style) */}
               {authMode === 'local' && (
-                <form onSubmit={handleLocalSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Staff Email Address
+                <form onSubmit={handleLocalSubmit} className="space-y-3.5">
+                  {/* Email ID Segmented Input */}
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email ID"
+                      required
+                      className="flex-1 px-3.5 py-3 text-sm bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-medium"
+                    />
+                  </div>
+
+                  {/* Password Segmented Input */}
+                  <div className="flex items-stretch rounded-xl overflow-hidden bg-[#e5e7eb] dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#0B4F9C] dark:focus-within:ring-[#5b9bf0] transition-all shadow-inner">
+                    <div className="w-12 flex items-center justify-center bg-[#d5d8de] dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-r border-slate-300/80 dark:border-slate-600 shrink-0">
+                      <Lock className="w-4 h-4" />
+                    </div>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="Password"
+                      required
+                      className="flex-1 px-3.5 py-3 text-sm bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 font-medium"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="px-3 text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 font-semibold cursor-pointer"
+                    >
+                      {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                  </div>
+
+                  {/* Remember Me & Forgot Password Row (Matching Image 2) */}
+                  <div className="flex items-center justify-between text-xs pt-0.5 px-0.5">
+                    <label className="flex items-center gap-2 cursor-pointer select-none text-slate-600 dark:text-slate-300 font-medium">
+                      <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        className="w-4 h-4 rounded border-slate-300 text-[#0B4F9C] focus:ring-[#0B4F9C] dark:border-slate-600 dark:bg-slate-800"
+                      />
+                      <span>Remember me</span>
                     </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="teacher.name@attwoolcollege.com"
-                        required
-                        className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100"
-                      />
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setStep('verify-otp'); setErrorMessage(null); }}
+                      className="text-slate-500 hover:text-[#0B4F9C] dark:text-slate-400 dark:hover:text-[#5b9bf0] font-medium transition-colors cursor-pointer"
+                    >
+                      Forgot Password?
+                    </button>
                   </div>
 
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
-                        Permanent Password
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => { setStep('verify-otp'); setErrorMessage(null); }}
-                        className="text-[11px] font-semibold text-[#0B4F9C] dark:text-[#5b9bf0] hover:underline cursor-pointer"
-                      >
-                        Reset / Activate with OTP?
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}
-                        placeholder="••••••••••••"
-                        required
-                        className="w-full pl-9 pr-10 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] dark:focus:ring-[#5b9bf0] text-slate-900 dark:text-slate-100"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 font-semibold cursor-pointer"
-                      >
-                        {showPassword ? 'Hide' : 'Show'}
-                      </button>
-                    </div>
-                  </div>
-
+                  {/* Primary Action Button (Image 2 style with Attwool Colors) */}
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#C8102E] hover:bg-[#a50b24] text-white text-sm font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-[#0B4F9C] hover:bg-[#083a74] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                   >
                     {isLoading ? (
                       <div className="flex items-center gap-2">
@@ -1000,15 +1043,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                         <span>Authenticating...</span>
                       </div>
                     ) : (
-                      <>
-                        <span>Sign In to Staff Portal</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </>
+                      <span>LOGIN</span>
                     )}
                   </button>
 
                   {/* Quick-Fill Presets for Testing */}
-                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="pt-2 border-t border-slate-200/80 dark:border-slate-800">
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center justify-between">
                       <span>Quick Test Login Presets:</span>
                       <span className="text-[9px] text-slate-400">Password: Attwool@2026</span>
@@ -1019,7 +1059,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                           key={idx}
                           type="button"
                           onClick={() => handleQuickFillLogin(persona)}
-                          className="py-1 px-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium truncate cursor-pointer text-center text-[10px]"
+                          className="py-1 px-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium truncate cursor-pointer text-center text-[10px]"
                           title={`${persona.name} (${persona.email})`}
                         >
                           {persona.email.split('@')[0]}
@@ -1031,7 +1071,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               )}
 
               {/* Link to Invitation & OTP Activation */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 text-center space-y-1.5">
+              <div className="pt-3 border-t border-slate-200/80 dark:border-slate-800 text-center space-y-1.5">
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   First time accessing with an institutional invitation email?
                 </p>
@@ -1055,8 +1095,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           )}
 
           {/* Security & NDPA 2023 Compliance Notice */}
-          <div className="mt-5 text-center text-[10px] text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
-            <ShieldAlert className="w-3.5 h-3.5 text-slate-400" />
+          <div className="mt-4 text-center text-[10px] text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
+            <ShieldAlert className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <span>Encrypted with SHA-256 tokens. Monitored under Nigeria Data Protection Act (NDPA 2023).</span>
           </div>
         </div>
