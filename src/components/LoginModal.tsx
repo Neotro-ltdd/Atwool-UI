@@ -7,15 +7,12 @@ import {
   CheckCircle2,
   ArrowRight,
   KeyRound,
-  Sparkles,
   Building2,
   ShieldCheck,
-  Send,
   HelpCircle,
   Key,
   Check,
   ArrowLeft,
-  RotateCcw,
   User
 } from 'lucide-react';
 
@@ -212,25 +209,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Handle simulating receiving an admin invitation email for QA
-  const handleSimulateInvitation = (persona: typeof demoPersonas[0]) => {
-    const cleanEmail = persona.email.toLowerCase().trim();
-    setEmail(persona.email);
-    setErrorMessage(null);
-
-    // If persona is already activated, never ask for OTP!
-    if (activatedEmails.has(cleanEmail)) {
-      setSuccessMessage(`Account already activated for ${persona.name}. Permanent password has already been established. Sign in using your password or Google SSO.`);
-      setStep('login');
-      setActiveTab('login');
-      setLoginPassword('Attwool@2026');
-      return;
-    }
-
-    // Unactivated: fill in OTP for one-time verification
-    setOtp(persona.testOtp);
-    setSuccessMessage(`Simulated Admin Invitation for ${persona.name}. Email & 6-digit OTP pre-filled.`);
-  };
 
   // Quick Fill on standard Login screen for QA
   const handleQuickFillLogin = (persona: typeof demoPersonas[0]) => {
@@ -458,12 +436,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }, 1000);
   };
 
-  // QA Tool: Reset demo activations
-  const handleResetDemoActivations = () => {
-    resetActivatedEmailsForTesting();
-    setActivatedEmails(new Set());
-    setSuccessMessage('Demo activations cleared. You can now re-test the one-time invitation & OTP activation flow from scratch.');
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
@@ -681,61 +653,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   )}
                 </button>
               </form>
-
-              {/* QA Test Simulation Quick-Fill */}
-              <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-slate-800">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-[#C8102E]" />
-                    Simulate Receiving Invitation Email
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleResetDemoActivations}
-                    className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 underline flex items-center gap-1 cursor-pointer"
-                    title="Clear activated cache to re-test invitation flow"
-                  >
-                    <RotateCcw className="w-2.5 h-2.5" />
-                    <span>Reset QA</span>
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 gap-1.5">
-                  {demoPersonas.map((persona, idx) => {
-                    const isActivated = activatedEmails.has(persona.email.toLowerCase().trim());
-                    return (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => handleSimulateInvitation(persona)}
-                        className="w-full text-left p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-[#0B4F9C] dark:hover:border-[#5b9bf0] hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all flex items-center justify-between cursor-pointer"
-                      >
-                        <div>
-                          <div className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 flex-wrap">
-                            <span>{persona.name}</span>
-                            <span className={`text-[9px] px-1.5 py-0.2 rounded border font-semibold ${persona.badgeColor}`}>
-                              {persona.role}
-                            </span>
-                            {isActivated ? (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-semibold flex items-center gap-0.5">
-                                <Check className="w-2.5 h-2.5" /> Activated
-                              </span>
-                            ) : (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800 font-semibold">
-                                Pending OTP
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-                            {persona.email} • {isActivated ? 'Password set (Click to sign in)' : `OTP: ${persona.testOtp} (Click to activate)`}
-                          </div>
-                        </div>
-                        <Send className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0B4F9C]" />
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
 
               <div className="text-center pt-2 space-y-1.5">
                 <button
@@ -1152,60 +1069,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     </div>
                   </div>
 
-                  {/* QA Test Simulation Quick-Fill */}
-                  <div className="mt-3 pt-2.5 border-t border-slate-200/80 dark:border-slate-800">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-[#C8102E]" />
-                        Simulate Receiving Invitation Email
-                      </span>
-                      <button
-                        type="button"
-                        onClick={handleResetDemoActivations}
-                        className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 underline flex items-center gap-1 cursor-pointer"
-                        title="Clear activated cache to re-test invitation flow"
-                      >
-                        <RotateCcw className="w-2.5 h-2.5" />
-                        <span>Reset QA</span>
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-1">
-                      {demoPersonas.slice(0, 3).map((persona, idx) => {
-                        const isActivated = activatedEmails.has(persona.email.toLowerCase().trim());
-                        return (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => handleSimulateInvitation(persona)}
-                            className="w-full text-left p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-[#0B4F9C] dark:hover:border-[#5b9bf0] hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all flex items-center justify-between cursor-pointer"
-                          >
-                            <div>
-                              <div className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 flex-wrap">
-                                <span>{persona.name}</span>
-                                <span className={`text-[9px] px-1 py-0.2 rounded border font-semibold ${persona.badgeColor}`}>
-                                  {persona.role}
-                                </span>
-                                {isActivated ? (
-                                  <span className="text-[9px] px-1 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-semibold flex items-center gap-0.5">
-                                    <Check className="w-2.5 h-2.5" /> Activated
-                                  </span>
-                                ) : (
-                                  <span className="text-[9px] px-1 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800 font-semibold">
-                                    Pending OTP
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                                {persona.email} • {isActivated ? 'Password set (Click to sign in)' : `OTP: ${persona.testOtp} (Click to activate)`}
-                              </div>
-                            </div>
-                            <Send className="w-3 h-3 text-slate-400 group-hover:text-[#0B4F9C]" />
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </div>
               )}
             </div>
