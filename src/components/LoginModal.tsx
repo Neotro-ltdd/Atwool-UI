@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   ArrowRight,
   KeyRound,
-  Building2,
   ShieldCheck,
   HelpCircle,
   Key,
@@ -476,15 +475,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
         <div className="pt-16 pb-6 px-6 sm:px-8">
           {/* Header & Logo */}
-          <div className="text-center mb-5">
-            <AttwoolLogo size="sm" showSubtitle={false} className="mb-2 justify-center" />
-            <h2 className="text-2xl font-bold font-brand-serif tracking-tight text-slate-900 dark:text-white">
-              Staff Portal Authentication
-            </h2>
-            <div className="flex items-center justify-center gap-1.5 mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">
-              <Building2 className="w-3.5 h-3.5 text-[#0B4F9C] dark:text-[#5b9bf0]" />
-              <span>{selectedCampus}</span>
-            </div>
+          <div className="text-center mb-4">
+            <AttwoolLogo size="sm" showSubtitle={false} className="justify-center" />
           </div>
 
           {/* Feedback Banners */}
