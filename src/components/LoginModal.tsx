@@ -208,14 +208,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   if (!isOpen) return null;
 
 
-  // Quick Fill on standard Login screen for QA
-  const handleQuickFillLogin = (persona: typeof demoPersonas[0]) => {
-    setEmail(persona.email);
-    setLoginPassword('Attwool@2026');
-    setActiveTab('login');
-    setErrorMessage(null);
-    setSuccessMessage(`Pre-filled credentials for ${persona.name}. Click Sign In to authenticate.`);
-  };
 
   // Step 1: Verify OTP (Strictly One-Time Only)
   const handleVerifyOtp = (e: React.FormEvent) => {
@@ -944,26 +936,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     </button>
                   </div>
 
-                  {/* Quick-Fill Presets for Testing */}
-                  <div className="pt-2 border-t border-slate-200/80 dark:border-slate-800">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
-                      <span>Quick Test Login Presets:</span>
-                      <span className="text-[9px] text-slate-400">Attwool@2026</span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-1 text-[11px]">
-                      {demoPersonas.map((persona, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => handleQuickFillLogin(persona)}
-                          className="py-1 px-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium truncate cursor-pointer text-center text-[10px]"
-                          title={`${persona.name} (${persona.email})`}
-                        >
-                          {persona.email.split('@')[0]}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               )}
 
