@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AttwoolLogo } from './AttwoolLogo';
 import {
   X,
   Lock,
@@ -450,17 +449,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           <div className="absolute -top-[120%] -right-[60%] w-[200%] h-[200%] bg-gradient-to-bl from-white/30 via-white/5 to-transparent rotate-12 opacity-80 dark:opacity-20 pointer-events-none" />
         </div>
 
-        {/* Floating Overlapping Avatar Badge (Signature Image 2 Motif) */}
+        {/* Floating Overlapping Profile Image Holder with School Logo Inside */}
         <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-[#072448] dark:bg-[#051833] border-4 border-white dark:border-slate-800 shadow-[0_12px_28px_rgba(0,0,0,0.35)] flex items-center justify-center text-white ring-2 ring-[#0B4F9C]/30 relative">
-            {/* Subtle inner glass rim */}
-            <div className="absolute inset-1 rounded-full border border-white/20" />
-            {/* User Silhouette Icon matching Image 2 */}
-            <User className="w-11 h-11 text-white stroke-[1.6]" />
-            {/* Miniature Attwool Emblem pip */}
-            <div className="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-white p-0.5 shadow-md border border-slate-200 flex items-center justify-center overflow-hidden">
-              <img src="/attwool-logo.jpg" alt="Attwool Crest" className="w-full h-full object-contain" />
-            </div>
+          <div className="w-24 h-24 rounded-full bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-800 shadow-[0_12px_28px_rgba(0,0,0,0.35)] flex items-center justify-center ring-2 ring-[#0B4F9C]/30 relative overflow-hidden p-2.5">
+            <img
+              src="/attwool-logo.jpg"
+              alt="Attwool Schools Official Crest"
+              className="w-full h-full object-contain rounded-full"
+            />
           </div>
         </div>
 
@@ -474,10 +470,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         </button>
 
         <div className="pt-16 pb-6 px-6 sm:px-8">
-          {/* Header & Logo */}
-          <div className="text-center mb-4">
-            <AttwoolLogo size="sm" showSubtitle={false} className="justify-center" />
-          </div>
 
           {/* Feedback Banners */}
           {errorMessage && (
