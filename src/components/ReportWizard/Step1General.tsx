@@ -1,6 +1,7 @@
-import React from 'react';
-import type { GeneralSection } from '../../types';
-import { Users, Info } from 'lucide-react';
+import React, { useMemo } from 'react';
+import type { GeneralSection, AcademicClass } from '../../types';
+import { defaultAcademicClasses } from '../../data/mockData';
+import { Users, Info, X } from 'lucide-react';
 
 interface Step1GeneralProps {
   data: GeneralSection;
@@ -8,7 +9,53 @@ interface Step1GeneralProps {
   disabled?: boolean;
 }
 
+const ACADEMIC_TIERS = [
+  'Senior Secondary',
+  'Junior Secondary',
+  'Primary School',
+  'Nursery & Early Years'
+] as const;
+
 export const Step1General: React.FC<Step1GeneralProps> = ({ data, onChange, disabled }) => {
+  // Load classes from localStorage if configured, fallback to defaultAcademicClasses
+  const allClasses = useMemo<AcademicClass[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('attwool_classes_v1');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {}
+    }
+    return defaultAcademicClasses;
+  }, []);
+
+  // Parse comma-separated classes taught into an array of class names
+  const selectedClasses = useMemo(() => {
+    return data.classesTaught
+      ? data.classesTaught.split(',').map((s) => s.trim()).filter(Boolean)
+      : [];
+  }, [data.classesTaught]);
+
+  // Handle adding a class to the classes taught selection
+  const handleAddClass = (className: string) => {
+    if (!className || selectedClasses.includes(className)) return;
+    const updated = [...selectedClasses, className];
+    onChange({ ...data, classesTaught: updated.join(', ') });
+  };
+
+  // Handle removing a class from the classes taught selection
+  const handleRemoveClass = (className: string) => {
+    const updated = selectedClasses.filter((c) => c !== className);
+    onChange({ ...data, classesTaught: updated.join(', ') });
+  };
+
+  // Check if current form tutor class is custom (not in default list)
+  const isCustomFormTutorClass = Boolean(
+    data.formTutorClassName && !allClasses.some((c) => c.name === data.formTutorClassName)
+  );
+
   return (
     <div className="space-y-6">
       <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-blue-900 flex items-start gap-3">
@@ -20,18 +67,77 @@ export const Step1General: React.FC<Step1GeneralProps> = ({ data, onChange, disa
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-            Class(es) Taught this Week
-          </label>
-          <input
-            type="text"
-            value={data.classesTaught}
-            onChange={(e) => onChange({ ...data, classesTaught: e.target.value })}
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Class(es) Taught this Week
+            </label>
+            {selectedClasses.length > 0 && !disabled && (
+              <button
+                type="button"
+                onClick={() => onChange({ ...data, classesTaught: '' })}
+                className="text-[10px] text-slate-400 hover:text-[#C8102E] font-medium cursor-pointer"
+              >
+                Clear all ({selectedClasses.length})
+              </button>
+            )}
+          </div>
+
+          {/* Classes Taught Dropdown */}
+          <select
+            value=""
+            onChange={(e) => {
+              handleAddClass(e.target.value);
+            }}
             disabled={disabled}
-            placeholder="e.g. SS 1 Science, SS 2 Arts"
-            className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] disabled:bg-slate-100"
-          />
-          <span className="text-[11px] text-slate-400 mt-1 block">Separated by commas for multi-class allocations</span>
+            className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] disabled:bg-slate-100 cursor-pointer text-slate-700 font-medium"
+          >
+            <option value="">+ Select class to add...</option>
+            {ACADEMIC_TIERS.map((tier) => {
+              const classesInTier = allClasses.filter((c) => c.tier === tier);
+              if (classesInTier.length === 0) return null;
+              return (
+                <optgroup key={tier} label={tier}>
+                  {classesInTier.map((c) => (
+                    <option
+                      key={c.id || c.name}
+                      value={c.name}
+                      disabled={selectedClasses.includes(c.name)}
+                    >
+                      {c.name} {selectedClasses.includes(c.name) ? '✓ (Selected)' : ''}
+                    </option>
+                  ))}
+                </optgroup>
+              );
+            })}
+          </select>
+
+          {/* Selected Class Badges */}
+          {selectedClasses.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {selectedClasses.map((cls, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-[#0B4F9C] border border-blue-200 shadow-2xs animate-in fade-in"
+                >
+                  <span>{cls}</span>
+                  {!disabled && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveClass(cls)}
+                      className="text-slate-400 hover:text-[#C8102E] transition-colors cursor-pointer"
+                      title={`Remove ${cls}`}
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="text-[11px] text-slate-400 mt-1 block">
+              Select one or multiple classes taught this reporting week from the dropdown
+            </span>
+          )}
         </div>
 
         <div>
@@ -46,6 +152,7 @@ export const Step1General: React.FC<Step1GeneralProps> = ({ data, onChange, disa
             placeholder="e.g. Physics, Basic Science"
             className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] disabled:bg-slate-100"
           />
+          <span className="text-[11px] text-slate-400 mt-1 block">Subject allocations for this week</span>
         </div>
       </div>
 
@@ -78,14 +185,38 @@ export const Step1General: React.FC<Step1GeneralProps> = ({ data, onChange, disa
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                 Form Tutor Assigned Class <span className="text-[#C8102E]">*</span>
               </label>
-              <input
-                type="text"
+              <select
                 value={data.formTutorClassName || ''}
-                onChange={(e) => onChange({ ...data, formTutorClassName: e.target.value })}
+                onChange={(e) => {
+                  const selectedName = e.target.value;
+                  const matched = allClasses.find((c) => c.name === selectedName);
+                  onChange({
+                    ...data,
+                    formTutorClassName: selectedName,
+                    formTutorClassId: matched?.id || data.formTutorClassId
+                  });
+                }}
                 disabled={disabled}
-                placeholder="e.g. SS 1 Science"
-                className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C]"
-              />
+                className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B4F9C] disabled:bg-slate-100 cursor-pointer font-medium text-slate-800"
+              >
+                <option value="">-- Select Form Tutor Class --</option>
+                {isCustomFormTutorClass && data.formTutorClassName && (
+                  <option value={data.formTutorClassName}>{data.formTutorClassName}</option>
+                )}
+                {ACADEMIC_TIERS.map((tier) => {
+                  const classesInTier = allClasses.filter((c) => c.tier === tier);
+                  if (classesInTier.length === 0) return null;
+                  return (
+                    <optgroup key={tier} label={tier}>
+                      {classesInTier.map((c) => (
+                        <option key={c.id || c.name} value={c.name}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  );
+                })}
+              </select>
             </div>
 
             <div>
