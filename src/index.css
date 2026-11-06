@@ -1,0 +1,301 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+    --bg-page: #fbfaf8;
+    --bg-surface: #ffffff;
+    --bg-subtle: #fbfaf8;
+    --border-color: #e6e3dd;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #0f172a;
+    background-color: #fbfaf8;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  :root[data-theme="dark"],
+  html.dark {
+    --bg-page: #0d1118;
+    --bg-surface: #161c27;
+    --bg-subtle: #121a28;
+    --border-color: #262f3d;
+    --text-primary: #f1f3f7;
+    --text-secondary: #cbd5e1;
+    --text-muted: #9aa4b5;
+    color-scheme: dark;
+  }
+
+  :root[data-theme="dark"] body,
+  html.dark body {
+    color: #f1f3f7;
+    background-color: #0d1118;
+  }
+}
+
+/* Attwool Custom Brand Styles & Heraldic Accents */
+.font-brand-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-brand-sans {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Heraldic Ribbon Motif */
+.attwool-ribbon-bar {
+  background: linear-gradient(180deg, #d91a2a 0%, #b80c1d 100%);
+  box-shadow: 0 4px 12px rgba(184, 12, 29, 0.25);
+  border-top: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+}
+
+.attwool-shield-gradient {
+  background: linear-gradient(135deg, #8e95a5 0%, #a4abb8 50%, #0b4f9c 50%, #083b74 100%);
+}
+
+/* ==========================================================================
+   Comprehensive Institutional Dark Mode Foundations (Matching Image 2)
+   ========================================================================== */
+html.dark {
+  /* Surfaces & Containers */
+  .bg-white {
+    background-color: #161c27 !important;
+  }
+
+  .bg-white\/95 {
+    background-color: rgba(14, 19, 27, 0.95) !important;
+  }
+
+  .bg-\[\#fbfaf8\] {
+    background-color: #121a28 !important;
+  }
+
+  .bg-slate-50 {
+    background-color: #121a28 !important;
+  }
+
+  .bg-slate-100 {
+    background-color: #1a2232 !important;
+  }
+
+  /* Borders & Dividers */
+  .border-\[\#e6e3dd\],
+  .border-slate-100,
+  .border-slate-200,
+  .border-slate-300 {
+    border-color: #262f3d !important;
+  }
+
+  .divide-\[\#e6e3dd\] > * + *,
+  .divide-slate-100 > * + *,
+  .divide-slate-200 > * + * {
+    border-color: #262f3d !important;
+  }
+
+  /* Shadows in Dark Mode */
+  .shadow-2xs,
+  .shadow-xs,
+  .shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .shadow-md,
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65) !important;
+  }
+
+  /* Avatar gradients */
+  .from-blue-100 {
+    --tw-gradient-from: #1e293b !important;
+  }
+  .to-indigo-100 {
+    --tw-gradient-to: #182232 !important;
+  }
+
+  /* Headings & Text Colors */
+  .text-slate-900 {
+    color: #f1f3f7 !important;
+  }
+
+  .text-slate-800 {
+    color: #e2e8f0 !important;
+  }
+
+  .text-slate-700 {
+    color: #cbd5e1 !important;
+  }
+
+  .text-slate-600 {
+    color: #94a3b8 !important;
+  }
+
+  .text-slate-500 {
+    color: #8392a5 !important;
+  }
+
+  .text-slate-400 {
+    color: #64748b !important;
+  }
+
+  /* Interactive Hover States */
+  .hover\:bg-slate-50:hover {
+    background-color: #1f2737 !important;
+  }
+
+  .hover\:bg-slate-100:hover {
+    background-color: #242d3d !important;
+  }
+
+  .hover\:bg-slate-200:hover {
+    background-color: #2e384b !important;
+  }
+
+  .hover\:bg-\[\#fbfaf8\]:hover {
+    background-color: #1a2232 !important;
+  }
+
+  .hover\:text-slate-900:hover {
+    color: #ffffff !important;
+  }
+
+  .hover\:text-slate-800:hover {
+    color: #f1f3f7 !important;
+  }
+
+  /* Inputs, Textareas, and Dropdown Selects */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    background-color: #121a28 !important;
+    border-color: #262f3d !important;
+    color: #f1f3f7 !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #64748b !important;
+  }
+
+  select option {
+    background-color: #161c27 !important;
+    color: #f1f3f7 !important;
+  }
+
+  /* Jewel-tone Badges & Accent Chips */
+  .bg-blue-50 {
+    background-color: rgba(11, 79, 156, 0.22) !important;
+  }
+  .bg-blue-100 {
+    background-color: rgba(11, 79, 156, 0.32) !important;
+  }
+  .border-blue-200 {
+    border-color: rgba(91, 155, 240, 0.35) !important;
+  }
+  .text-blue-700,
+  .text-blue-600,
+  .text-blue-800,
+  .text-\[\#0B4F9C\] {
+    color: #5b9bf0 !important;
+  }
+
+  .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.18) !important;
+  }
+  .bg-emerald-100 {
+    background-color: rgba(16, 185, 129, 0.28) !important;
+  }
+  .border-emerald-200 {
+    border-color: rgba(52, 211, 153, 0.35) !important;
+  }
+  .text-emerald-600,
+  .text-emerald-700,
+  .text-emerald-800 {
+    color: #34d399 !important;
+  }
+
+  .bg-purple-50 {
+    background-color: rgba(168, 85, 247, 0.18) !important;
+  }
+  .bg-purple-100 {
+    background-color: rgba(168, 85, 247, 0.28) !important;
+  }
+  .border-purple-200 {
+    border-color: rgba(192, 132, 252, 0.35) !important;
+  }
+  .text-purple-700,
+  .text-purple-900 {
+    color: #c084fc !important;
+  }
+
+  .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.18) !important;
+  }
+  .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.28) !important;
+  }
+  .border-amber-200 {
+    border-color: rgba(251, 191, 36, 0.35) !important;
+  }
+  .text-amber-700,
+  .text-amber-800,
+  .text-amber-900 {
+    color: #fbbf24 !important;
+  }
+
+  .bg-rose-50 {
+    background-color: rgba(225, 29, 72, 0.18) !important;
+  }
+  .bg-rose-100 {
+    background-color: rgba(225, 29, 72, 0.28) !important;
+  }
+  .border-rose-200 {
+    border-color: rgba(251, 113, 133, 0.35) !important;
+  }
+  .text-rose-600,
+  .text-rose-700,
+  .text-rose-800,
+  .text-rose-900 {
+    color: #fb7185 !important;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0d1118;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #262f3d;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b4759;
+}
