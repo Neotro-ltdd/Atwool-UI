@@ -497,19 +497,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {/* SCREEN 1: First-Time Visit / Invitation-Only Notice */}
           {step === 'invitation-notice' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60">
-                <div className="flex items-start gap-3">
-                  <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <h3 className="text-xs font-bold text-amber-900 dark:text-amber-200 uppercase tracking-wider mb-1">
-                      Staff Access by Invitation Only
-                    </h3>
-                    <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
-                      Public self-registration is strictly disallowed on this institutional portal. Academic staff, HODs, and administrators cannot register on their own and must be provisioned directly by School Administration.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
               {/* 3-Step Onboarding Explainer */}
               <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3.5 bg-slate-50/60 dark:bg-slate-900/40 space-y-2">
@@ -991,20 +978,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               {/* PAGE 2: Portal Information & How to Activate (Requested by User) */}
               {activeTab === 'guide' && (
                 <div className="space-y-3.5 animate-in fade-in">
-                  {/* Institutional Policy Notice */}
-                  <div className="p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60">
-                    <div className="flex items-start gap-2.5">
-                      <ShieldAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-                      <div>
-                        <h3 className="text-xs font-bold text-amber-900 dark:text-amber-200 uppercase tracking-wider mb-0.5">
-                          Staff Access by Invitation Only
-                        </h3>
-                        <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
-                          Public self-registration is strictly disallowed on this institutional portal. Academic staff, HODs, and administrators cannot register on their own and must be provisioned directly by School Administration.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
 
                   {/* 3-Step Onboarding Explainer: How to Get Access & How to Activate */}
                   <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3 bg-slate-50/60 dark:bg-slate-900/40 space-y-2">
